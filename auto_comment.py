@@ -53,17 +53,14 @@ def main():
             break  # Nhấn Enter 2 lần để dừng nhập
         comments.append(comment)
 
-    # Kiểm tra số lượng comment có khớp với số token không
-    if len(comments) < len(tokens):
-        print(f"\n⚠️ Cảnh báo: Có {len(tokens) - len(comments)} tài khoản không có comment! Sẽ sử dụng comment mặc định là '...'")
-        comments.extend(["..."] * (len(tokens) - len(comments)))  # Điền thêm comment mặc định nếu thiếu
-
-    # Gửi bình luận tự động
+    # Gửi bình luận tự động chỉ khi còn token và comment
     print("\n🚀 Bắt đầu gửi bình luận...\n")
-    for idx, token in enumerate(tokens):
-        status = send_comment(token, comments[idx], reply_id)
-        print(f"[{idx + 1}/{len(tokens)}] Token: {token[:10]}... | Bình luận: {comments[idx]} | Status: {status}")
-        time.sleep(1)  # Nghỉ 1 giây giữa các request
+    for idx, (token, comment) in enumerate(zip(tokens, comments)):
+        status = send_comment(token, comment, reply_id)
+        print(f"[{idx + 1}/{min(len(tokens), len(comments))}] Token: {token[:10]}... | Bình luận: {comment} | Status: {status}")
+        sleep_time = random.randint(120, 180)  # Chờ ngẫu nhiên từ 2 đến 3 phút
+        print(f"⏳ Chờ {sleep_time} giây trước khi gửi bình luận tiếp theo...")
+        time.sleep(sleep_time)
 
     print("\n✅ Hoàn thành gửi bình luận!")
 
