@@ -52,9 +52,7 @@ def main():
         print(f"\n📌 Đang react cho bài post ID: {post_id}")
         for idx, token in enumerate(tokens):
             status = send_react(post_id, token)
-            print(f"  [{idx + 1}/{len(tokens)}] Token: {token[:10]}... | Status: {status}")
-            time.sleep(1)  # Nghỉ 1 giây giữa các request
-    
+            print(f"  [{idx + 1}/{len(tokens)}] Token: {token}... | Status: {status}")    
     print("\n✅ Hoàn thành tất cả react!")
 
 
